@@ -1,0 +1,1 @@
+03:53:35: ( 15 , T=N#R=O#9223372038886130583 , T=N#R=O#9223372043800556153 , T=X#R=X#224054081475471412 , T=X#R=X#0 , Lesser Earth Elemental , Eternal Servant , 0 , 75533189 , Thud ) Eternal Servant dodges Lesser Earth Elemental's Thud.
