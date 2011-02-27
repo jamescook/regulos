@@ -13,12 +13,16 @@ module Regulos
       attr_reader :path, :events
       def initialize(options={})
         @path = ::File.exist?( options[:path] ) ? options[:path] : raise(FileNotFoundError, "The specified combat log does not exist.")
-        @events = []
+        @events = EventCollection.new []
       end
 
       def parse
         data = ::File.readlines path
         data.each{|row| @events << Event.handle(row) }
+      end
+
+      def filter options
+        events.filter(options) 
       end
 
       def inspect

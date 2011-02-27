@@ -1,3 +1,5 @@
+require "digest/md5"
+
 module Regulos
   module CombatLog
     module Event
@@ -34,7 +36,19 @@ module Regulos
         end
 
         def inspect
-          "<#{self.class}>"
+          "<#{self.class} id=#{id}>"
+        end
+
+        def id
+          @id ||= Digest::MD5.hexdigest( [time, full_message].join ) if time && full_message
+        end
+
+        def ==(other)
+          other.id == id
+        end
+
+        def name
+          self.class.to_s.split("::").last
         end
 
         def code
@@ -50,11 +64,11 @@ module Regulos
         end
 
         def buff?
-          code == :BuffGain
+          code == :BuffGain || code == :BuffFade
         end
 
         def debuff?
-          code == :Affliction
+          code == :DebuffGain || code == :DebuffFade
         end
 
         def process attributes
