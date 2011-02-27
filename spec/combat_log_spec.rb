@@ -1,10 +1,6 @@
 require "spec_helper.rb"
 
 describe Regulos::CombatLog::File do
-  context ".parse" do
-    it "should instantiate an instance of CombatLog::File"
-  end
-
   context "#new" do
     context "given a valid path" do
       let(:path){ simple_combat_log_path }

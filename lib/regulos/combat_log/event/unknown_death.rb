@@ -1,7 +1,7 @@
 module Regulos
   module CombatLog
     module Event
-      class NpcDeath < Base
+      class UnknownDeath < Base
       end
     end
   end

@@ -13,8 +13,8 @@ module Regulos
               :Affliction     => "8",
               :Dissipate      => "9",
               :AttackMiss     => "10",
-              :NpcDeath       => "11",
-              :PlayerDeath    => "12",
+              :Death          => "11",
+              :UnknownDeath   => "12",
               :FallDamage     => "14",
               :Dodge          => "15",
               :Parry          => "16",
@@ -37,13 +37,24 @@ module Regulos
           "<#{self.class}>"
         end
 
-        def damage?
+        def code
+          CODES.invert[ action_code ]
         end
 
         def heal?
+          full_message =~ /heals/
+        end
+
+        def overheal?
+          full_message =~ /\d\soverheal/
         end
 
         def buff?
+          code == :BuffGain
+        end
+
+        def debuff?
+          code == :Affliction
         end
 
         def process attributes
@@ -63,8 +74,8 @@ module Regulos
             e[:action_code]  = s.scan(/\s\d+?\s,/)               # 15 (dodge)
             e[:origin]       = s.scan entity_regex
             e[:target]       = s.scan entity_regex
-            e[:nyi]          = s.scan entity_regex               # FIXME Not certain about this yet
-            e[:nyi2]         = s.scan entity_regex               # FIXME ??
+            e[:pet_origin]   = s.scan entity_regex               # Your pet did something
+            e[:pet_target]   = s.scan entity_regex               # Your pet is receiving damage, heal, etc
             e[:origin_name]  = s.scan /\s[A-Za-z\s\-]+?\s,/
             e[:target_name]  = s.scan /\s[A-Za-z\s\-]+?\s,/
             e[:output]       = s.scan /\s\d+?\s,/                # Damage or healing output
