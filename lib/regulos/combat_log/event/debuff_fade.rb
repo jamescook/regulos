@@ -1,7 +1,7 @@
 module Regulos
   module CombatLog
     module Event
-      class Dissipate < Base
+      class DebuffFade < Base
       end
     end
   end

@@ -1,7 +1,7 @@
 module Regulos
   module CombatLog
     module Event
-      class Affliction < Base
+      class DebuffGain < Base
       end
     end
   end

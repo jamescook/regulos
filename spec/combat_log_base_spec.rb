@@ -57,14 +57,14 @@ describe Regulos::CombatLog::Event::Base do
     end
 
     context "for a row signaling a debuff was cast" do
-      it "should return Affliction" do
-        which( events["Affliction"] ).should be_an_instance_of( Regulos::CombatLog::Event::Affliction )
+      it "should return DebuffGain" do
+        which( events["DebuffGain"] ).should be_an_instance_of( Regulos::CombatLog::Event::DebuffGain )
       end
     end
 
     context "for a row signaling a debuff ended" do
-      it "should return Dissipate" do
-        which( events["Dissipate"] ).should be_an_instance_of( Regulos::CombatLog::Event::Dissipate )
+      it "should return DebuffFade" do
+        which( events["DebuffFade"] ).should be_an_instance_of( Regulos::CombatLog::Event::DebuffFade )
       end
     end
 
