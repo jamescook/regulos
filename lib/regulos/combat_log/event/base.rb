@@ -55,21 +55,44 @@ module Regulos
           CODES.invert[ action_code ]
         end
 
-        def heal?
-          full_message =~ /heals/
+        def target_is_player?
+          target && target.klass == "Player"
         end
 
-        def overheal?
-          full_message =~ /\d\soverheal/
+        def target_is_npc?
+          target && target.klass == "Npc"
         end
 
-        def buff?
-          code == :BuffGain || code == :BuffFade
+        def origin_is_npc?
+          origin && origin.klass == "Npc"
         end
 
-        def debuff?
-          code == :DebuffGain || code == :DebuffFade
+        def origin_is_player?
+          origin && origin.klass == "Player"
         end
+
+        def origin_is_pet?
+          origin && origin.klass == "Pet"
+        end
+
+        def target_is_pet?
+          target && target.klass == "Pet"
+        end
+
+        def miss?;     false; end
+        def parry?;    false; end
+        def dodge?;    false; end
+        def resist?;   false; end
+        def immune?;   false; end
+        def attack?;   false; end
+        def spell?;    false; end
+        def heal?;     false; end
+        def overheal?; false; end
+        def buff?;     false; end
+        def debuff?;   false; end
+        def critical?; false; end
+        def death?;    false; end
+        def damage_over_time?; false; end
 
         def process attributes
           attributes.each_pair{|k,v| self.class.send(:attr_reader, k); instance_variable_set("@#{k}", v) }
@@ -80,6 +103,7 @@ module Regulos
         class << self
           def which(row)
             require "strscan"
+            return row if row.class.to_s =~ /Event\Z/i
             s = StringScanner.new row   
 #03:53:35: ( 15 , T=N#R=O#9223372038886130583 , T=N#R=O#9223372043800556153 , T=X#R=X#224054081475471412 , T=X#R=X#0 , Lesser Earth Elemental , Eternal Servant , 0 , 75533189 , Thud ) Eternal Servant dodges Lesser Earth Elemental's Thud.
             entity_regex  = /\s[A-Z]=[A-Z]#[A-Z]=[A-Z]#\d+?\s,/
@@ -97,7 +121,12 @@ module Regulos
             e[:spell_name]   = s.scan /\s[A-Za-z\-\s]+?\s\)/     # Spell name
             e[:full_message] = s.scan /\s(.*)+\Z/                # Full log message
             e = sanitize(e)
+            e = capture_entities(e)
             determine_event_type(e).new e
+          end
+
+          def capture_entities(hash)
+            CombatLog::Entity::Base.process(hash)
           end
 
           def sanitize hash

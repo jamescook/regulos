@@ -17,6 +17,11 @@ describe Regulos::CombatLog::Event::Base do
     context "for a row signaling a spell is being cast" do
       it "should return BeginCast" do
         which( events["BeginCast"] ).should be_an_instance_of( Regulos::CombatLog::Event::BeginCast )
+        which( events["BeginCast"] ).origin.should be_kind_of(Regulos::CombatLog::Entity::Base )
+      end
+
+      it "should be aware of the origin" do
+        which( events["BeginCast"] ).origin.should be_kind_of(Regulos::CombatLog::Entity::Base )
       end
     end
 
@@ -24,11 +29,19 @@ describe Regulos::CombatLog::Event::Base do
       it "should return Interrupt" do
         which( events["Interrupt"] ).should be_an_instance_of( Regulos::CombatLog::Event::Interrupt )
       end
+
+      it "should be aware of the origin" do
+        which( events["Interrupt"] ).origin.should be_kind_of(Regulos::CombatLog::Entity::Base )
+      end
     end
 
     context "for a row signaling a spell landed on the target" do
       it "should return AttackHit" do
         which( events["AttackHit"] ).should be_an_instance_of( Regulos::CombatLog::Event::AttackHit )
+      end
+
+      it "should be aware of the origin" do
+        which( events["AttackHit"] ).origin.should be_kind_of(Regulos::CombatLog::Entity::Base )
       end
     end
 
@@ -36,17 +49,37 @@ describe Regulos::CombatLog::Event::Base do
       it "should return DamageOverTime" do
         which( events["DamageOverTime"] ).should be_an_instance_of( Regulos::CombatLog::Event::DamageOverTime )
       end
+
+      it "should be aware of the origin" do
+        which( events["DamageOverTime"] ).origin.should be_kind_of(Regulos::CombatLog::Entity::Base )
+      end
     end
 
     context "for a row signaling the target was healed" do
       it "should return Heal" do
         which( events["Heal"] ).should be_an_instance_of( Regulos::CombatLog::Event::Heal )
       end
+
+      it "should be aware of the origin" do
+        which( events["Heal"] ).origin.should be_kind_of(Regulos::CombatLog::Entity::Base )
+      end
+
+      it "should be aware of the target" do
+        which( events["Heal"] ).target.should be_kind_of(Regulos::CombatLog::Entity::Base )
+      end
     end
 
     context "for a row signaling a buff was cast" do
       it "should return BuffGain" do
         which( events["BuffGain"] ).should be_an_instance_of( Regulos::CombatLog::Event::BuffGain )
+      end
+
+      it "should be aware of the origin" do
+        which( events["BuffGain"] ).origin.should be_kind_of(Regulos::CombatLog::Entity::Base )
+      end
+
+      it "should be aware of the target" do
+        which( events["BuffGain"] ).target.should be_kind_of(Regulos::CombatLog::Entity::Base )
       end
     end
 

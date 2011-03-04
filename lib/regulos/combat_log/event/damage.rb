@@ -1,7 +1,8 @@
 module Regulos
   module CombatLog
     module Event
-      class AttackHit < Base
+      class Damage < Base
+        def attack?; true; end
       end
     end
   end

@@ -2,5 +2,6 @@ lib = File.expand_path('../', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
 require "regulos/combat_log/file.rb"
+require "regulos/combat_log/entity.rb"
 require "regulos/combat_log/event_collection.rb"
 require "regulos/combat_log/event.rb"

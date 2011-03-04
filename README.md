@@ -12,9 +12,7 @@
 
 * require 'regulos'
 * log = Regulos::CombatLog.parse "/path/to/combatlog.txt"
-* log.filter :only    => {:event => ["Heal"]
-* events = log.filter :exclude => {:event => ["Heal", "CriticalHeal"]
-* events.first.full_message
+* log.find :event => {:only => ['Heal']}, :entity => [:player]
 
 
 #### Methods on Event
