@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["James Cook"]
   s.email       = ["james@isotope11.com"]
-  s.homepage    = "http://github.com/jamecook/regulos"
+  s.homepage    = "http://github.com/jamescook/regulos"
   s.summary     = "'Rift - Planes of Telera' combat log parser"
   s.description = "Regulos parses combat logs for reporting & statistics."
  

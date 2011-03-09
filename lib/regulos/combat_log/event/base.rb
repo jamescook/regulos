@@ -39,12 +39,46 @@ module Regulos
           "<#{self.class} id=#{id}>"
         end
 
+        def to_s
+           respond_to?(:full_message) ? full_message : inspect
+        end
+
+        def is_a? thing
+          if thing.is_a?(Symbol)
+            thing.to_s.downcase == name.downcase
+          else
+            super
+          end
+        end
+
+        def is_not? thing
+          !is_a?(thing)
+        end
+
+        def targets thing
+          target && target.is_a?(thing)
+        end
+
+        def originates thing
+          origin && origin.is_a?(thing)
+        end
+        alias_method :origin_is, :originates
+
+        def is_event?
+          true
+        end
+
         def id
           @id ||= Digest::MD5.hexdigest( [time, full_message].join ) if time && full_message
         end
 
         def ==(other)
           other.id == id
+        end
+        alias :eql? :==
+
+        def <=> other
+          time.to_s <=> other.time.to_s
         end
 
         def name

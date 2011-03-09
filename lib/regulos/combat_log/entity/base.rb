@@ -12,6 +12,19 @@ module Regulos
           "<#{self.class} '#{name}'>"
         end
 
+        def is_a? thing
+          if thing.is_a?(Symbol)
+            thing.to_s.downcase == klass.downcase
+          else
+            super
+          end
+        end
+
+        def ==(other)
+          other.respond_to?(:klass) && klass == other.klass && other.name == name
+        end
+
+        # Convience method to get the 'simple' class name
         def klass
           self.class.to_s.split("::").last
         end
